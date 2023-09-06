@@ -1,14 +1,23 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import GameList from "./GameList";
 
 interface IGame {
   id: number;
   name: string;
 }
 
-export default function Consols() {
-  const [consoles, setConsoles] = useState<IGame[]>([]);
-  const [selectedGame, setSelectedGame] = useState(-1);
+interface IConsole {
+  id: number;
+  name: string;
+  games: IGame[];
+}
+
+export default function Consoles() {
+  const [consoles, setConsoles] = useState<IConsole[]>([]);
+  const [selectedConsoleIndex, setSelectedConsoleIndex] = useState<
+    number | null
+  >(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -16,30 +25,50 @@ export default function Consols() {
         const response = await axios.get(
           "https://api.rawg.io/api/platforms?key=8182b6a257ae4c869c18ba6d8de3a607"
         );
-        setConsoles(response.data.results);
+        // Modify the API data structure to match our defined types
+        const modifiedData: IConsole[] = response.data.results.map(
+          (console: any) => ({
+            id: console.id,
+            name: console.name,
+            games: console.games, // Access the "games" key within each console object
+          })
+        );
+        setConsoles(modifiedData); // Set the consoles state with the modified data
       } catch (error) {
         console.error("Error fetching data: ", error);
       }
     };
     fetchData();
   }, []);
+  // Function to handle console item click
+  const handleConsoleClick = (index: number) => {
+    setSelectedConsoleIndex(index); // Set the selectedConsoleIndex state to the clicked index
+  };
 
   return (
     <>
-      <h1>Consol List</h1>
+      <h1>Console List</h1>
       <ul className="list-group">
         {consoles.map((console, i) => (
-          <li
-            key={console.id}
-            className={
-              selectedGame === i ? "list-group-item active" : "list-group-item"
-            }
-            onClick={() => {
-              setSelectedGame(i);
-            }}
-          >
-            {console.name}
-          </li>
+          <div key={console.id} className="console-container">
+            <li
+              className={
+                selectedConsoleIndex === i
+                  ? "list-group-item active"
+                  : "list-group-item"
+              }
+              onClick={() => handleConsoleClick(i)}
+            >
+              {console.name}
+            </li>
+
+            {selectedConsoleIndex === i && (
+              <div className="games-for-console">
+                <h3>Games for Selected Console</h3>
+                <GameList games={consoles[selectedConsoleIndex].games} />
+              </div>
+            )}
+          </div>
         ))}
       </ul>
     </>
