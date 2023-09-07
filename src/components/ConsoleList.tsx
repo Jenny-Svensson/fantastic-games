@@ -54,7 +54,6 @@ export default function Consoles() {
 
   return (
     <>
-      <h1>Console List</h1>
       <div className="container mt-4">
         <div className="row">
           <div className="col-md-2">

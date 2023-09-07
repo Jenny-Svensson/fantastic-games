@@ -21,7 +21,16 @@ export default function GameList({ games }: GameListProps) {
           {row.map((game) => (
             <div className="col-md-4" key={game.id}>
               <div className="card mb-3">
-                <img src="..." className="card-img-top" alt="..." />
+                <img
+                  src="..."
+                  className="card-img-top"
+                  alt="..."
+                  onError={(e) => {
+                    const target = e.target as HTMLInputElement;
+                    target.onerror = null;
+                    target.src = "#"; // link to fallback omg
+                  }}
+                />
                 <div className="card-body">
                   <h5 className="card-title">{game.name}</h5>
                   <p className="card-text">
