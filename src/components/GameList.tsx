@@ -28,7 +28,7 @@ export default function GameList({ games }: GameListProps) {
                   onError={(e) => {
                     const target = e.target as HTMLInputElement;
                     target.onerror = null;
-                    target.src = "#"; // link to fallback omg
+                    target.src = ""; // link to fallback img
                   }}
                 />
                 <div className="card-body">
