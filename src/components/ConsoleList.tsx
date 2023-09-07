@@ -18,6 +18,7 @@ export default function Consoles() {
   const [selectedConsoleIndex, setSelectedConsoleIndex] = useState<
     number | null
   >(null);
+  const [showAllConsoles, setShowAllConsoles] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -40,37 +41,54 @@ export default function Consoles() {
     };
     fetchData();
   }, []);
+
   // Function to handle console item click
   const handleConsoleClick = (index: number) => {
     setSelectedConsoleIndex(index); // Set the selectedConsoleIndex state to the clicked index
   };
 
+  // Function to show all consoles
+  const handleShowAllConsoles = () => {
+    setShowAllConsoles(true);
+  };
+
   return (
     <>
       <h1>Console List</h1>
-      <ul className="list-group">
-        {consoles.map((console, i) => (
-          <div key={console.id} className="console-container">
-            <li
-              className={
-                selectedConsoleIndex === i
-                  ? "list-group-item active"
-                  : "list-group-item"
-              }
-              onClick={() => handleConsoleClick(i)}
-            >
-              {console.name}
-            </li>
-
-            {selectedConsoleIndex === i && (
+      <div className="container mt-4">
+        <div className="row">
+          <div className="col-md-2">
+            <div className="d-flex flex-column">
+              {consoles
+                .slice(0, showAllConsoles ? consoles.length : 4)
+                .map((console, i) => (
+                  <div
+                    key={console.id}
+                    className={`mb-2 ${
+                      selectedConsoleIndex === i ? "bg-light" : ""
+                    }`}
+                    onClick={() => handleConsoleClick(i)}
+                  >
+                    <div className="p-2">{console.name}</div>
+                  </div>
+                ))}
+            </div>
+            {!showAllConsoles && (
+              <button className="btn btn-link" onClick={handleShowAllConsoles}>
+                Show More
+              </button>
+            )}
+          </div>
+          <div className="col-md-8">
+            {selectedConsoleIndex !== null && (
               <div className="games-for-console">
-                <h3>Games for Selected Console</h3>
+                <h3>{`Games for ${consoles[selectedConsoleIndex].name}`}</h3>
                 <GameList games={consoles[selectedConsoleIndex].games} />
               </div>
             )}
           </div>
-        ))}
-      </ul>
+        </div>
+      </div>
     </>
   );
 }
