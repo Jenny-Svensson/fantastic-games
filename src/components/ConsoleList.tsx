@@ -78,7 +78,7 @@ export default function Consoles() {
               </button>
             )}
           </div>
-          <div className="col-md-8">
+          <div className="col-md-10">
             {selectedConsoleIndex !== null && (
               <div className="games-for-console">
                 <h3>{`Games for ${consoles[selectedConsoleIndex].name}`}</h3>
