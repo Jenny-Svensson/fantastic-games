@@ -5,6 +5,7 @@ import GameList from "./GameList";
 interface IGame {
   id: number;
   name: string;
+  background_image: string;
 }
 
 interface IConsole {

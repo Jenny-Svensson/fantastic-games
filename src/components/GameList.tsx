@@ -1,6 +1,9 @@
+import GameDetails from "./GameDetails";
+
 interface IConsole {
   id: number;
   name: string;
+  background_image: string;
 }
 
 interface GameListProps {
@@ -22,24 +25,12 @@ export default function GameList({ games }: GameListProps) {
             <div className="col-md-4" key={game.id}>
               <div className="card mb-3">
                 <img
-                  src="..."
+                  src={game.background_image}
                   className="card-img-top"
-                  alt="..."
-                  onError={(e) => {
-                    const target = e.target as HTMLInputElement;
-                    target.onerror = null;
-                    target.src = "./src/assets/img/fallback-img.jpg"; // link to fallback img
-                  }}
+                  alt={game.name}
                 />
                 <div className="card-body">
-                  <h5 className="card-title">{game.name}</h5>
-                  <p className="card-text">
-                    Some quick example text to build on the card title and make
-                    up the bulk of the card's content.
-                  </p>
-                  <a href="#" className="btn btn-primary">
-                    More
-                  </a>
+                  <GameDetails gameId={game.id} />
                 </div>
               </div>
             </div>
