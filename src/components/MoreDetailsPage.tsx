@@ -1,4 +1,3 @@
-import React from "react";
 import { GameDetailsData } from "./GameDetails";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";

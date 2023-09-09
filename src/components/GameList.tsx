@@ -1,42 +1,36 @@
 import GameDetails from "./GameDetails";
+import AllGames from "./AllGames";
 
 interface IConsole {
   id: number;
   name: string;
-  background_image: string;
 }
 
 interface GameListProps {
   games: IConsole[];
+  selectedConsole: IConsole | null;
 }
 
-export default function GameList({ games }: GameListProps) {
-  // Split the games into groups of 3
-  const gamesInRows = [];
-  for (let i = 0; i < games.length; i += 3) {
-    const row = games.slice(i, i + 3);
-    gamesInRows.push(row);
-  }
-  return (
-    <div>
-      {gamesInRows.map((row, rowIndex) => (
-        <div className="row" key={rowIndex}>
-          {row.map((game) => (
-            <div className="col-md-4" key={game.id}>
-              <div className="card mb-3">
-                <img
-                  src={game.background_image}
-                  className="card-img-top"
-                  alt={game.name}
-                />
-                <div className="card-body">
-                  <GameDetails gameId={game.id} />
-                </div>
+export default function GameList({ games, selectedConsole }: GameListProps) {
+  if (selectedConsole) {
+    // Render games for the selected console
+    return (
+      <div className="row">
+        {games.map((game) => (
+          <div className="col-md-4" key={game.id}>
+            <div className="card mb-3">
+              {/* You can render other details here */}
+              <div className="card-body">
+                <h3 className="card-title">{game.name}</h3>
+                <GameDetails gameId={game.id} />
               </div>
             </div>
-          ))}
-        </div>
-      ))}
-    </div>
-  );
+          </div>
+        ))}
+      </div>
+    );
+  } else {
+    // No selected console, show the AllGames component
+    return <AllGames />;
+  }
 }

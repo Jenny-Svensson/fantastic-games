@@ -8,7 +8,6 @@ export interface GameDetailsData {
   rating: number;
   description: string;
   background_image: string;
-  // Add more properties as needed
 }
 
 interface GameDetailsProps {
@@ -51,7 +50,9 @@ export default function GameDetails({ gameId }: GameDetailsProps) {
       <h3>{gameDetails.name}</h3>
       <p>Release Date: {gameDetails.released}</p>
       <p>Rating: {gameDetails.rating}</p>
-      <button onClick={moreDetailPage}>More</button>
+      <button className="btn btn-primary" onClick={moreDetailPage}>
+        More
+      </button>
       {showMoreDetails && (
         <MoreDetailsPage
           gameDetails={gameDetails}
