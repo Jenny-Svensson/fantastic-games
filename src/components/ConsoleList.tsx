@@ -27,7 +27,7 @@ export default function Consoles() {
         const response = await axios.get(
           "https://api.rawg.io/api/platforms?key=8182b6a257ae4c869c18ba6d8de3a607"
         );
-        // Modify the API data structure to match our defined types
+
         const modifiedData: IConsole[] = response.data.results.map(
           (console: any) => ({
             id: console.id,
@@ -35,7 +35,8 @@ export default function Consoles() {
             games: console.games, // Access the "games" key within each console object
           })
         );
-        setConsoles(modifiedData); // Set the consoles state with the modified data
+
+        setConsoles(modifiedData);
       } catch (error) {
         console.error("Error fetching data: ", error);
       }
@@ -43,52 +44,57 @@ export default function Consoles() {
     fetchData();
   }, []);
 
-  // Function to handle console item click
   const handleConsoleClick = (index: number) => {
-    setSelectedConsoleIndex(index); // Set the selectedConsoleIndex state to the clicked index
+    setSelectedConsoleIndex(index);
+    setShowAllConsoles(false); // Hide the AllGames component when a console is selected
   };
 
-  // Function to show all consoles
   const handleShowAllConsoles = () => {
+    setSelectedConsoleIndex(null); // Deselect the console
     setShowAllConsoles(true);
   };
 
   return (
-    <>
-      <div className="container mt-4">
-        <div className="row">
-          <div className="col-md-2">
-            <div className="d-flex flex-column">
-              {consoles
-                .slice(0, showAllConsoles ? consoles.length : 4)
-                .map((console, i) => (
-                  <div
-                    key={console.id}
-                    className={`mb-2 ${
-                      selectedConsoleIndex === i ? "bg-light" : ""
-                    }`}
-                    onClick={() => handleConsoleClick(i)}
-                  >
-                    <div className="p-2">{console.name}</div>
-                  </div>
-                ))}
-            </div>
+    <div className="container mt-4">
+      <div className="row">
+        {/* Left column for ConsoleList */}
+        <div className="col-md-2">
+          <div className="d-flex flex-column">
+            {consoles
+              .slice(0, showAllConsoles ? consoles.length : 4)
+              .map((console, i) => (
+                <div
+                  key={console.id}
+                  className={`mb-2 ${
+                    selectedConsoleIndex === i ? "bg-light" : ""
+                  }`}
+                  onClick={() => handleConsoleClick(i)}
+                >
+                  <div className="p-2">{console.name}</div>
+                </div>
+              ))}
             {!showAllConsoles && (
               <button className="btn btn-link" onClick={handleShowAllConsoles}>
                 Show More
               </button>
             )}
           </div>
-          <div className="col-md-10">
-            {selectedConsoleIndex !== null && (
-              <div className="games-for-console">
-                <h3>{`Games for ${consoles[selectedConsoleIndex].name}`}</h3>
-                <GameList games={consoles[selectedConsoleIndex].games} />
-              </div>
-            )}
-          </div>
+        </div>
+        {/* Right column for GameList */}
+        <div className="col-md-10">
+          {selectedConsoleIndex !== null ? (
+            <div className="games-for-console">
+              <h3>{`Games for ${consoles[selectedConsoleIndex].name}`}</h3>
+              <GameList
+                games={consoles[selectedConsoleIndex].games}
+                selectedConsole={consoles[selectedConsoleIndex]}
+              />
+            </div>
+          ) : (
+            <GameList games={[]} selectedConsole={null} />
+          )}
         </div>
       </div>
-    </>
+    </div>
   );
 }
