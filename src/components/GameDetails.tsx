@@ -1,21 +1,14 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import MoreDetailsPage from "./MoreDetailsPage";
-
-export interface GameDetailsData {
-  name: string;
-  released: string;
-  rating: number;
-  description: string;
-  background_image: string;
-}
+import IGameDetailsData from "../model/IGameDetailsData";
 
 interface GameDetailsProps {
   gameId: number;
 }
 
 export default function GameDetails({ gameId }: GameDetailsProps) {
-  const [gameDetails, setGameDetails] = useState<GameDetailsData | null>(null);
+  const [gameDetails, setGameDetails] = useState<IGameDetailsData | null>(null);
   const [showMoreDetails, setShowMoreDetails] = useState(false);
 
   useEffect(() => {

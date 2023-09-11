@@ -1,18 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import GameList from "./GameList";
-
-interface IGame {
-  id: number;
-  name: string;
-  background_image: string;
-}
-
-interface IConsole {
-  id: number;
-  name: string;
-  games: IGame[];
-}
+import IConsole from "../model/IConsole"; // Import the IConsole interface from the model folder
 
 export default function Consoles() {
   const [consoles, setConsoles] = useState<IConsole[]>([]);

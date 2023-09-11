@@ -1,10 +1,6 @@
 import GameDetails from "./GameDetails";
 import AllGames from "./AllGames";
-
-interface IConsole {
-  id: number;
-  name: string;
-}
+import IConsole from "../model/IConsole";
 
 interface GameListProps {
   games: IConsole[];
