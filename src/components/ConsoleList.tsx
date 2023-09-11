@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import GameList from "./GameList";
 import IConsole from "../models/IConsole";
+import GenreList from "./GenreList";
 
 export default function Consoles() {
   const [consoles, setConsoles] = useState<IConsole[]>([]);
@@ -80,6 +81,7 @@ export default function Consoles() {
                 Show More
               </button>
             )}
+            <GenreList />
           </div>
         </div>
         {/* Right column for GameList */}
