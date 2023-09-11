@@ -1,8 +1,9 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import IGenre from "../models/IGenre";
 
 export default function GenreList() {
-  const [genres, setGenres] = useState([]);
+  const [genres, setGenres] = useState<IGenre[]>([]);
   const [showAllGenres, setShowAllGenres] = useState(false);
 
   useEffect(() => {
@@ -11,7 +12,7 @@ export default function GenreList() {
         const response = await axios.get(
           "https://api.rawg.io/api/genres?key=8182b6a257ae4c869c18ba6d8de3a607"
         );
-        setGenres(response.data.results.map((genre: any) => genre.name));
+        setGenres(response.data.results);
       } catch (error) {
         console.error("Error fetching data: ", error);
       }
@@ -40,7 +41,7 @@ export default function GenreList() {
               role="button"
               aria-label={`Select Genre: ${genre}`}
             >
-              <div className="p-2">{genre}</div>
+              <div className="p-2">{genre.name}</div>
             </div>
           ))}
         </div>
