@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import GameList from "./GameList";
-import IConsole from "../model/IConsole"; // Import the IConsole interface from the model folder
+import IConsole from "../models/IConsole"; // Import the IConsole interface from the model folder
 
 export default function Consoles() {
   const [consoles, setConsoles] = useState<IConsole[]>([]);

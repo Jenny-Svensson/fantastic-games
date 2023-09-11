@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Pagination from "./Pagination";
-import IGame from "../model/IGame"; // Import the IConsole interface from the model folder
+import IGame from "../models/IGame"; // Import the IConsole interface from the model folder
 
 export default function AllGames() {
   const [games, setGames] = useState<IGame[]>([]);

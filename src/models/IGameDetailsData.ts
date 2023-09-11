@@ -1,5 +1,6 @@
 
 interface IGameDetailsData {
+    id: string;
     name: string;
     released: string;
     rating: number;

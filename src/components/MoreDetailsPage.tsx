@@ -1,6 +1,6 @@
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-import IGameDetailsData from "../model/IGameDetailsData";
+import IGameDetailsData from "../models/IGameDetailsData";
 
 interface MoreDetailsPageProps {
   gameDetails: IGameDetailsData;

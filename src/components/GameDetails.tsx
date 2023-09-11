@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import MoreDetailsPage from "./MoreDetailsPage";
-import IGameDetailsData from "../model/IGameDetailsData";
+import IGameDetailsData from "../models/IGameDetailsData";
 
 interface GameDetailsProps {
   gameId: number;
