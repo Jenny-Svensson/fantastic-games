@@ -1,9 +1,10 @@
-import IGame from "./IGame";
+
+import IGameDetailsData from "./IGameDetailsData";
 
 interface IConsole {
   id: number;
   name: string;
-  games: IGame[];
+  games: IGameDetailsData[];
 }
 
 export default IConsole;

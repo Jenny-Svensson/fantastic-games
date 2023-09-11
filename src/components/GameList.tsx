@@ -1,10 +1,10 @@
 import GameDetails from "./GameDetails";
 import AllGames from "./AllGames";
 import IConsole from "../models/IConsole";
-import IGame from "../models/IGame";
+import IGameDetailsData from "../models/IGameDetailsData";
 
 interface GameListProps {
-  games: IGame[];
+  games: IGameDetailsData[];
   selectedConsole: IConsole | null;
 }
 

@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Pagination from "./Pagination";
-import IGame from "../models/IGame"; // Import the IConsole interface from the model folder
+import IGameDetailsData from "../models/IGameDetailsData";
 
 export default function AllGames() {
-  const [games, setGames] = useState<IGame[]>([]);
+  const [games, setGames] = useState<IGameDetailsData[]>([]);
   const [currentPageUrl, setCurrentPageUrl] = useState<string>(
     "https://api.rawg.io/api/games?key=8182b6a257ae4c869c18ba6d8de3a607"
   );
@@ -36,7 +36,7 @@ export default function AllGames() {
   }
 
   // Split the games into groups of 3
-  const gamesInRows: IGame[][] = [];
+  const gamesInRows: IGameDetailsData[][] = [];
   for (let i = 0; i < games.length; i += 3) {
     const row = games.slice(i, i + 3);
     gamesInRows.push(row);
