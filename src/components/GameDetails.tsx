@@ -40,18 +40,32 @@ export default function GameDetails({ gameId }: GameDetailsProps) {
 
   return (
     <div>
-      <h3>{gameDetails.name}</h3>
-      <p>Release Date: {gameDetails.released}</p>
-      <p>Rating: {gameDetails.rating}</p>
-      <button className="btn btn-primary" onClick={moreDetailPage}>
-        More
-      </button>
-      {showMoreDetails && (
-        <MoreDetailsPage
-          gameDetails={gameDetails}
-          onClose={closeMoreDetailPage}
-        />
-      )}
+      <img
+        src={gameDetails.background_image}
+        alt={gameDetails.name}
+        style={{ maxWidth: "100%", height: "auto" }}
+      />
+      <div className="card-body">
+        <h5 className="card-title">{gameDetails.name}</h5>
+        <div className="d-flex align-items-center">
+          <span className="badge bg-primary me-2">
+            {" "}
+            <span role="img" aria-label="Star" className="star-symbol">
+              ⭐
+            </span>
+            {gameDetails.rating}
+          </span>
+        </div>
+        <button className="btn btn-primary" onClick={moreDetailPage}>
+          More
+        </button>
+        {showMoreDetails && (
+          <MoreDetailsPage
+            gameDetails={gameDetails}
+            onClose={closeMoreDetailPage}
+          />
+        )}
+      </div>
     </div>
   );
 }

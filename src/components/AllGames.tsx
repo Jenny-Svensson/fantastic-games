@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Pagination from "./Pagination";
 import IGameDetailsData from "../models/IGameDetailsData";
+import GameDetails from "./GameDetails";
 
 export default function AllGames() {
   const [games, setGames] = useState<IGameDetailsData[]>([]);
@@ -44,15 +45,14 @@ export default function AllGames() {
 
   return (
     <>
-      <h1>All Games</h1>
+      <h1 className="mb-4">All Games</h1>
       {gamesInRows.map((row, rowIndex) => (
         <div className="row" key={rowIndex}>
           {row.map((game) => (
             <div className="col-md-4" key={game.id}>
               <div className="card mb-3">
                 <div className="card-body">
-                  <h3 className="card-title">{game.name}</h3>
-                  {/* Render other game details here */}
+                  <GameDetails gameId={game.id} />
                 </div>
               </div>
             </div>

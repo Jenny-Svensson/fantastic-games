@@ -18,7 +18,6 @@ export default function GameList({ games, selectedConsole }: GameListProps) {
             <div className="card mb-3">
               {/* You can render other details here */}
               <div className="card-body">
-                <h3 className="card-title">{game.name}</h3>
                 <GameDetails gameId={game.id} />
               </div>
             </div>
