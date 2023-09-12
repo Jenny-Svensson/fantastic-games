@@ -5,7 +5,7 @@ import IGameDetailsData from "../models/IGameDetailsData";
 
 interface GameListProps {
   games: IGameDetailsData[];
-  selectedConsole: IConsole | null;
+  selectedConsole?: IConsole | null;
 }
 
 export default function GameList({ games, selectedConsole }: GameListProps) {

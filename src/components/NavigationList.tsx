@@ -1,9 +1,192 @@
-import ConsoleList from "./ConsoleList";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import GameList from "./GameList";
+import IConsole from "../models/IConsole";
+import GenreGamesList from "./GenreGamesList";
+import AllGames from "./AllGames";
+import IGenreDetailsData from "../models/IGenreDetailsData";
 
 export default function NavigationList() {
+  const [consoles, setConsoles] = useState<IConsole[]>([]);
+  const [genres, setGenres] = useState<IGenreDetailsData[]>([]);
+
+  const [showAllGenres, setShowAllGenres] = useState<boolean>(false);
+  const [showAllGames, setShowAllGames] = useState<boolean>(true);
+  const [showAllConsoles, setShowAllConsoles] = useState<boolean>(false);
+
+  const [selectedConsoleIndex, setSelectedConsoleIndex] = useState<
+    number | null
+  >(null);
+
+  const [selectedGenreId, setSelectedGenreId] = useState<number | null>(null);
+  const [gamesForSelectedGenre, setGamesForSelectedGenre] = useState<
+    { id: number; name: string }[]
+  >([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Fetch console data
+        const consolesResponse = await axios.get(
+          "https://api.rawg.io/api/platforms?key=8182b6a257ae4c869c18ba6d8de3a607"
+        );
+        const modifiedConsolesData: IConsole[] =
+          consolesResponse.data.results.map((console: any) => ({
+            id: console.id,
+            name: console.name,
+            games: console.games,
+          }));
+        setConsoles(modifiedConsolesData);
+
+        // Fetch genre data
+        const genresResponse = await axios.get(
+          "https://api.rawg.io/api/genres?key=8182b6a257ae4c869c18ba6d8de3a607"
+        );
+        setGenres(genresResponse.data.results);
+      } catch (error) {
+        console.error("Error fetching data: ", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const handleConsoleClick = (index: number) => {
+    setSelectedConsoleIndex(index);
+    setShowAllConsoles(false); // Hide the AllGames component when a console is selected
+    setSelectedGenreId(null); // Deselect the genre
+    setShowAllGenres(false); // Show all genres
+    setShowAllGames(false); // Hide "All Games"
+  };
+
+  const handleShowAllConsoles = () => {
+    setSelectedConsoleIndex(null); // Deselect the console
+    setShowAllConsoles(true);
+    setSelectedGenreId(null); // Deselect the genre
+    setShowAllGenres(true); // Show all genres
+    setShowAllGames(false); // Hide "All Games"
+  };
+
+  const handleGenreClick = async (genreId: number) => {
+    try {
+      const gamesResponse = await axios.get(
+        `https://api.rawg.io/api/games?key=8182b6a257ae4c869c18ba6d8de3a607&genres=${genreId}`
+      );
+
+      setSelectedGenreId(genreId);
+      setGamesForSelectedGenre(gamesResponse.data.results);
+      setShowAllGenres(false);
+      setSelectedConsoleIndex(null); // Deselect the console
+      setShowAllConsoles(false); // Hide all consoles
+      setShowAllGames(false); // Hide "All Games"
+
+      console.log(`Clicked on genre with ID: ${genreId}`);
+    } catch (error) {
+      console.error("Error fetching genre games: ", error);
+    }
+  };
+
+  const handleShowAllGames = () => {
+    setSelectedConsoleIndex(null); // Deselect the console
+    setShowAllConsoles(true); // Show all consoles
+    setSelectedGenreId(null); // Deselect the genre
+    setShowAllGenres(true); // Show all genres
+    setShowAllGames(true); // Show "All Games"
+  };
+
   return (
-    <>
-      <ConsoleList />
-    </>
+    <div className="container mt-4">
+      <div className="row">
+        {/* Left column for ConsoleList and GenreList */}
+        <div className="col-md-2">
+          <button className="btn btn-primary" onClick={handleShowAllGames}>
+            All games
+          </button>
+          <h4>Consoles</h4>
+          <div className="d-flex flex-column">
+            {consoles
+              .slice(0, showAllConsoles ? consoles.length : 4)
+              .map((console, i) => (
+                <div
+                  key={console.id}
+                  className={`mb-2 ${
+                    selectedConsoleIndex === i ? "bg-light" : ""
+                  }`}
+                  onClick={() => handleConsoleClick(i)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      handleConsoleClick(i);
+                    }
+                  }}
+                  tabIndex={0}
+                  role="button"
+                  aria-label={`Select Console: ${console.name}`}
+                  aria-selected={selectedConsoleIndex === i}
+                >
+                  <div className="p-2">{console.name}</div>
+                </div>
+              ))}
+            {!showAllConsoles && (
+              <button
+                className="btn btn-primary"
+                onClick={handleShowAllConsoles}
+              >
+                Show More
+              </button>
+            )}
+          </div>
+          <h4>Genres</h4>
+          <div className="d-flex flex-column">
+            {genres.slice(0, showAllGenres ? genres.length : 4).map((genre) => (
+              <div
+                key={genre.id}
+                className="mb-2"
+                onClick={() => handleGenreClick(genre.id)}
+                style={{ cursor: "pointer" }}
+              >
+                <div className="p-2">{genre.name}</div>
+              </div>
+            ))}
+            {!showAllGenres && (
+              <button
+                className="btn btn-primary"
+                onClick={() => setShowAllGenres(true)}
+              >
+                Show More
+              </button>
+            )}
+          </div>
+        </div>
+        {/* Right column for GameList or GenreGamesList */}
+        <div className="col-md-10">
+          {selectedConsoleIndex !== null ? (
+            <div className="games-for-console">
+              <h3>{`Games for ${consoles[selectedConsoleIndex].name}`}</h3>
+              <GameList
+                games={consoles[selectedConsoleIndex].games}
+                selectedConsole={consoles[selectedConsoleIndex]}
+              />
+            </div>
+          ) : selectedGenreId ? (
+            <div className="games-for-console">
+              <h3>{`Games for ${
+                genres.find((genre) => genre.id === selectedGenreId)?.name
+              }`}</h3>
+              <GenreGamesList
+                selectedGenre={
+                  genres.find((genre) => genre.id === selectedGenreId)?.name ||
+                  ""
+                }
+                games={gamesForSelectedGenre}
+              />
+            </div>
+          ) : showAllGames ? (
+            <div className="games-for-console">
+              <AllGames />
+            </div>
+          ) : null}
+        </div>
+      </div>
+    </div>
   );
 }
