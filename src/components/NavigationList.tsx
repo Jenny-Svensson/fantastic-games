@@ -129,7 +129,7 @@ export default function NavigationList() {
             {!showAllConsoles && (
               <button
                 className="btn btn-primary"
-                onClick={handleShowAllConsoles}
+                onClick={() => setShowAllConsoles(true)}
               >
                 Show More
               </button>
