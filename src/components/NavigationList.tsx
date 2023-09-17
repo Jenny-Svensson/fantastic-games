@@ -29,7 +29,7 @@ export default function NavigationList() {
       try {
         // Fetch console data
         const consolesResponse = await axios.get(
-          "https://api.rawg.io/api/platforms?key=8182b6a257ae4c869c18ba6d8de3a607"
+          `https://api.rawg.io/api/platforms?key=8182b6a257ae4c869c18ba6d8de3a607`
         );
         const modifiedConsolesData: IConsole[] =
           consolesResponse.data.results.map((console: any) => ({
