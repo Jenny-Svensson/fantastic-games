@@ -1,4 +1,3 @@
-
 import IGameDetailsData from "./IGameDetailsData";
 
 interface IConsole {

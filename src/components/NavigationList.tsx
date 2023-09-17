@@ -5,6 +5,7 @@ import IConsole from "../models/IConsole";
 import GenreGamesList from "./GenreGamesList";
 import AllGames from "./AllGames";
 import IGenreDetailsData from "../models/IGenreDetailsData";
+import IGameDetailsData from "../models/IGameDetailsData";
 
 export default function NavigationList() {
   const [consoles, setConsoles] = useState<IConsole[]>([]);
@@ -20,7 +21,7 @@ export default function NavigationList() {
 
   const [selectedGenreId, setSelectedGenreId] = useState<number | null>(null);
   const [gamesForSelectedGenre, setGamesForSelectedGenre] = useState<
-    { id: number; name: string }[]
+    IGameDetailsData[]
   >([]);
 
   useEffect(() => {
@@ -53,18 +54,10 @@ export default function NavigationList() {
 
   const handleConsoleClick = (index: number) => {
     setSelectedConsoleIndex(index);
-    setShowAllConsoles(false); // Hide the AllGames component when a console is selected
-    setSelectedGenreId(null); // Deselect the genre
-    setShowAllGenres(false); // Show all genres
-    setShowAllGames(false); // Hide "All Games"
-  };
-
-  const handleShowAllConsoles = () => {
-    setSelectedConsoleIndex(null); // Deselect the console
-    setShowAllConsoles(true);
-    setSelectedGenreId(null); // Deselect the genre
-    setShowAllGenres(true); // Show all genres
-    setShowAllGames(false); // Hide "All Games"
+    setShowAllConsoles(false);
+    setSelectedGenreId(null);
+    setShowAllGenres(false);
+    setShowAllGames(false);
   };
 
   const handleGenreClick = async (genreId: number) => {
@@ -76,8 +69,8 @@ export default function NavigationList() {
       setSelectedGenreId(genreId);
       setGamesForSelectedGenre(gamesResponse.data.results);
       setShowAllGenres(false);
-      setSelectedConsoleIndex(null); // Deselect the console
-      setShowAllConsoles(false); // Hide all consoles
+      setSelectedConsoleIndex(null);
+      setShowAllConsoles(false);
       setShowAllGames(false); // Hide "All Games"
 
       console.log(`Clicked on genre with ID: ${genreId}`);
@@ -87,10 +80,10 @@ export default function NavigationList() {
   };
 
   const handleShowAllGames = () => {
-    setSelectedConsoleIndex(null); // Deselect the console
-    setShowAllConsoles(true); // Show all consoles
-    setSelectedGenreId(null); // Deselect the genre
-    setShowAllGenres(true); // Show all genres
+    setSelectedConsoleIndex(null);
+    setShowAllConsoles(true);
+    setSelectedGenreId(null);
+    setShowAllGenres(true);
     setShowAllGames(true); // Show "All Games"
   };
 

@@ -10,13 +10,11 @@ interface GameListProps {
 
 export default function GameList({ games, selectedConsole }: GameListProps) {
   if (selectedConsole) {
-    // Render games for the selected console
     return (
       <div className="row">
         {games.map((game) => (
           <div className="col-md-4" key={game.id}>
             <div className="card mb-3">
-              {/* You can render other details here */}
               <div className="card-body">
                 <GameDetails gameId={game.id} />
               </div>

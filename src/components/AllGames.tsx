@@ -36,7 +36,6 @@ export default function AllGames() {
     }
   }
 
-  // Split the games into groups of 3
   const gamesInRows: IGameDetailsData[][] = [];
   for (let i = 0; i < games.length; i += 3) {
     const row = games.slice(i, i + 3);

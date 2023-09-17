@@ -25,7 +25,6 @@ export default function MoreDetailsPage({
         <p>Release Date: {gameDetails.released}</p>
         <p>Rating: {gameDetails.rating}</p>
         <p>Description: {gameDetails.description}</p>
-        {/* Add more details as needed */}
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={onClose}>

@@ -45,9 +45,9 @@ export default function GameDetails({ gameId }: GameDetailsProps) {
         alt={gameDetails.name}
         style={{ maxWidth: "100%", height: "auto" }}
       />
-      <div className="card-body">
+      <div className="card-body d-flex flex-column">
         <h5 className="card-title">{gameDetails.name}</h5>
-        <div className="d-flex align-items-center">
+        <div className="d-flex justify-content-between align-items-end">
           <span className="badge bg-primary me-2">
             {" "}
             <span role="img" aria-label="Star" className="star-symbol">
@@ -55,10 +55,10 @@ export default function GameDetails({ gameId }: GameDetailsProps) {
             </span>
             {gameDetails.rating}
           </span>
+          <button className="btn btn-sm btn-dark" onClick={moreDetailPage}>
+            More
+          </button>
         </div>
-        <button className="btn btn-primary" onClick={moreDetailPage}>
-          More
-        </button>
         {showMoreDetails && (
           <MoreDetailsPage
             gameDetails={gameDetails}
