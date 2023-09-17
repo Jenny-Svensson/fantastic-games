@@ -8,17 +8,17 @@ import IGenreDetailsData from "../models/IGenreDetailsData";
 import IGameDetailsData from "../models/IGameDetailsData";
 
 export default function NavigationList() {
+  // State for consoles, genres, and display settings
   const [consoles, setConsoles] = useState<IConsole[]>([]);
   const [genres, setGenres] = useState<IGenreDetailsData[]>([]);
-
   const [showAllGenres, setShowAllGenres] = useState<boolean>(false);
   const [showAllGames, setShowAllGames] = useState<boolean>(true);
   const [showAllConsoles, setShowAllConsoles] = useState<boolean>(false);
 
+  // State for selected console, selected genre, and games for the selected genre
   const [selectedConsoleIndex, setSelectedConsoleIndex] = useState<
     number | null
   >(null);
-
   const [selectedGenreId, setSelectedGenreId] = useState<number | null>(null);
   const [gamesForSelectedGenre, setGamesForSelectedGenre] = useState<
     IGameDetailsData[]
@@ -52,14 +52,16 @@ export default function NavigationList() {
     fetchData();
   }, []);
 
+  // Handle selecting a console
   const handleConsoleClick = (index: number) => {
-    setSelectedConsoleIndex(index);
-    setShowAllConsoles(false);
-    setSelectedGenreId(null);
-    setShowAllGenres(false);
-    setShowAllGames(false);
+    setSelectedConsoleIndex(index); // Set the selected console index
+    setShowAllConsoles(false); // Hide "All Consoles" when a console is selected
+    setSelectedGenreId(null); // Deselect the genre
+    setShowAllGenres(false); // Hide all genres
+    setShowAllGames(false); // Hide "All Games"
   };
 
+  // Handle selecting a genre
   const handleGenreClick = async (genreId: number) => {
     try {
       const gamesResponse = await axios.get(
@@ -67,10 +69,10 @@ export default function NavigationList() {
       );
 
       setSelectedGenreId(genreId);
-      setGamesForSelectedGenre(gamesResponse.data.results);
-      setShowAllGenres(false);
-      setSelectedConsoleIndex(null);
-      setShowAllConsoles(false);
+      setGamesForSelectedGenre(gamesResponse.data.results); // Set the games for the selected genre
+      setShowAllGenres(false); // Hide genre list
+      setSelectedConsoleIndex(null); // Deselect the console
+      setShowAllConsoles(false); // Hide all consoles
       setShowAllGames(false); // Hide "All Games"
 
       console.log(`Clicked on genre with ID: ${genreId}`);
@@ -79,11 +81,12 @@ export default function NavigationList() {
     }
   };
 
+  // Handle showing all games
   const handleShowAllGames = () => {
-    setSelectedConsoleIndex(null);
-    setShowAllConsoles(true);
-    setSelectedGenreId(null);
-    setShowAllGenres(true);
+    setSelectedConsoleIndex(null); // Deselect the console
+    setShowAllConsoles(true); // Show all consoles
+    setSelectedGenreId(null); // Deselect the genre
+    setShowAllGenres(true); // Show all genres
     setShowAllGames(true); // Show "All Games"
   };
 
