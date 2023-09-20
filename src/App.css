@@ -3,3 +3,12 @@ body {
     color: #f2f2f2;
 }
 
+.custom-console {
+    border-radius: 12px;
+    transition: background-color 1s ease; /* Add a smooth transition */
+  }
+  
+  .custom-console:hover {
+    background-color: #585858; /* Change the background color on hover */
+    color: white; /* You can also change the text color on hover if needed */
+  }

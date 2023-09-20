@@ -7,6 +7,8 @@ import AllGames from "./AllGames";
 import IGenreDetailsData from "../models/IGenreDetailsData";
 import IGameDetailsData from "../models/IGameDetailsData";
 
+const API_KEY = "8182b6a257ae4c869c18ba6d8de3a607";
+
 export default function NavigationList() {
   // State for consoles, genres, and display settings
   const [consoles, setConsoles] = useState<IConsole[]>([]);
@@ -29,7 +31,7 @@ export default function NavigationList() {
       try {
         // Fetch console data
         const consolesResponse = await axios.get(
-          `https://api.rawg.io/api/platforms?key=8182b6a257ae4c869c18ba6d8de3a607`
+          `https://api.rawg.io/api/platforms?key=${API_KEY}`
         );
         const modifiedConsolesData: IConsole[] =
           consolesResponse.data.results.map((console: any) => ({
@@ -41,7 +43,7 @@ export default function NavigationList() {
 
         // Fetch genre data
         const genresResponse = await axios.get(
-          "https://api.rawg.io/api/genres?key=8182b6a257ae4c869c18ba6d8de3a607"
+          `https://api.rawg.io/api/genres?key=${API_KEY}`
         );
         setGenres(genresResponse.data.results);
       } catch (error) {
@@ -65,7 +67,7 @@ export default function NavigationList() {
   const handleGenreClick = async (genreId: number) => {
     try {
       const gamesResponse = await axios.get(
-        `https://api.rawg.io/api/games?key=8182b6a257ae4c869c18ba6d8de3a607&genres=${genreId}`
+        `https://api.rawg.io/api/games?key=${API_KEY}&genres=${genreId}`
       );
 
       setSelectedGenreId(genreId);
@@ -105,8 +107,8 @@ export default function NavigationList() {
               .map((console, i) => (
                 <div
                   key={console.id}
-                  className={`mb-2 ${
-                    selectedConsoleIndex === i ? "bg-light" : ""
+                  className={`mb-2 custom-console ${
+                    selectedConsoleIndex === i ? "bg-secondary " : ""
                   }`}
                   onClick={() => handleConsoleClick(i)}
                   onKeyDown={(e) => {
@@ -136,7 +138,7 @@ export default function NavigationList() {
             {genres.slice(0, showAllGenres ? genres.length : 4).map((genre) => (
               <div
                 key={genre.id}
-                className="mb-2"
+                className="mb-2 custom-console"
                 onClick={() => handleGenreClick(genre.id)}
                 style={{ cursor: "pointer" }}
               >
