@@ -45,6 +45,7 @@ export default function AllGames() {
   return (
     <>
       <h1 className="mb-4">All Games</h1>
+      <Pagination gotoNextPage={gotoNextPage} gotoPrevPage={gotoPrevPage} />
       {gamesInRows.map((row, rowIndex) => (
         <div className="row" key={rowIndex}>
           {row.map((game) => (
@@ -58,7 +59,6 @@ export default function AllGames() {
           ))}
         </div>
       ))}
-      <Pagination gotoNextPage={gotoNextPage} gotoPrevPage={gotoPrevPage} />
     </>
   );
 }

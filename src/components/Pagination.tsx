@@ -8,9 +8,13 @@ export default function Pagination({
   gotoPrevPage,
 }: PaginationProps) {
   return (
-    <div>
-      <button onClick={gotoPrevPage}>Previous</button>
-      <button onClick={gotoNextPage}>Next</button>
+    <div className="pagination-container">
+      <button onClick={gotoPrevPage}>
+        <span className="material-symbols-outlined">arrow_back_ios_new</span>
+      </button>
+      <button onClick={gotoNextPage}>
+        <span className="material-symbols-outlined">arrow_forward_ios</span>
+      </button>
     </div>
   );
 }
