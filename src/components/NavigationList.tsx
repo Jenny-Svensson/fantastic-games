@@ -100,7 +100,14 @@ export default function NavigationList() {
           <button className="btn btn-primary" onClick={handleShowAllGames}>
             All games
           </button>
-          <h4>Consoles</h4>
+
+          <h4 className="navigation-h4">
+            {" "}
+            <span className="material-symbols-outlined">
+              stadia_controller
+            </span>{" "}
+            Consoles
+          </h4>
           <div className="d-flex flex-column">
             {consoles
               .slice(0, showAllConsoles ? consoles.length : 4)
@@ -133,7 +140,9 @@ export default function NavigationList() {
               </button>
             )}
           </div>
-          <h4>Genres</h4>
+          <h4 className="navigation-h4">
+            <span className="material-symbols-outlined">gamepad</span> Genres
+          </h4>
           <div className="d-flex flex-column">
             {genres.slice(0, showAllGenres ? genres.length : 4).map((genre) => (
               <div

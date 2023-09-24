@@ -9,8 +9,8 @@ body {
   }
   
   .custom-console:hover {
-    background-color: #585858; /* Change the background color on hover */
-    color: white; /* You can also change the text color on hover if needed */
+    background-color: #585858; 
+    color: #f2f2f2; 
   }
 
   .details{
@@ -22,3 +22,15 @@ body {
     justify-content: center;
     margin: 20px;
   }
+
+
+  .card-body {
+    background-color: #f1f1f1;
+  }
+
+  .navigation-h4{
+    margin: 5px;
+    padding: 5px;
+    border-bottom: 3px double #3f3f3f;
+  }
+
