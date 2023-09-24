@@ -12,3 +12,7 @@ body {
     background-color: #585858; /* Change the background color on hover */
     color: white; /* You can also change the text color on hover if needed */
   }
+
+  .details{
+    color: #292929;
+  }

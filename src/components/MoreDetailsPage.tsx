@@ -14,7 +14,7 @@ export default function MoreDetailsPage({
   return (
     <Modal show={true} onHide={onClose} scrollable>
       <Modal.Header closeButton>
-        <Modal.Title>Game Details</Modal.Title>
+        <Modal.Title className="details">Game Details</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <img
@@ -22,9 +22,9 @@ export default function MoreDetailsPage({
           alt={gameDetails.name}
           style={{ maxWidth: "100%", height: "auto" }}
         />
-        <p>Release Date: {gameDetails.released}</p>
-        <p>Rating: {gameDetails.rating}</p>
-        <p>Description: {gameDetails.description}</p>
+        <p className="details">Release Date: {gameDetails.released}</p>
+        <p className="details">Rating: {gameDetails.rating}</p>
+        <p className="details">Description: {gameDetails.description}</p>
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={onClose}>
